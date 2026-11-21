@@ -12,8 +12,8 @@ public class ProductsController : Controller
 {
     private static readonly List<Product> Products =
         [new(1, "Notebook", "Notebook para desarrollo", 1200.00m, 10),
-        new(1, "Teclado mecánico", "Teclado mecánico 123", 200.00m, 5),
-        new (2, "Mouse", "Mouse inalámbrico", 25.50m, 30)];
+        new(2, "Teclado mecánico", "Teclado mecánico 123", 200.00m, 5),
+        new (3, "Mouse", "Mouse inalámbrico", 25.50m, 30)];
         
     private static int _nextId = 2;
 
