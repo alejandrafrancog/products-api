@@ -24,8 +24,29 @@ public class ProductsController : Controller
         return Ok(Products);
     }
     
-    [HttpGet("{id:int}")]
     
+	[HttpGet("{id:int}")]
+   	[ProducesResponseType<IEnumerable<Product>>(StatusCodes.Status200OK)]
+	[ProducesResponseType<IEnumerable<Product>>(StatusCodes.Status404NotFound)]
+    public ActionResult<Product> GetById(int id){
+	   if(id < 0 || id > Products.Count)
+	   {
+		   return NotFound();
+	   }	
+       return Ok(Products[id-1]);
+    }
+
+	[HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+	public ActionResult<Product> Create(Product product)
+	{
+		Products.Add(product);
+		return CreatedAtAction(
+			nameof(GetById),
+			new {id = product.Id},
+			product);
+	}
+	
     
     public sealed record Product(
         int Id,
