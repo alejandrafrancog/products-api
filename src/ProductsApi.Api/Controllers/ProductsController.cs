@@ -46,6 +46,19 @@ public class ProductsController : Controller
 			new {id = product.Id},
 			product);
 	}
+
+    [HttpDelete("{id:int}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public ActionResult<Product> Delete(int id){
+
+        if(id <= 0 || id > Products.Count){
+		   return NotFound();
+	    }	
+        Products.RemoveAt(id-1);
+        return NoContent();
+    }
+    
 	
     
     public sealed record Product(
