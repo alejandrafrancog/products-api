@@ -15,8 +15,7 @@ public class ProductsController : Controller
         new(2, "Teclado mecánico", "Teclado mecánico 123", 200.00m, 5),
         new (3, "Mouse", "Mouse inalámbrico", 25.50m, 30)];
         
-    private static int _nextId = 2;
-
+        
     [HttpGet]
     [ProducesResponseType<IEnumerable<Product>>(StatusCodes.Status200OK)]
     public ActionResult<IEnumerable<Product>> GetAll()
@@ -84,7 +83,30 @@ public class ProductsController : Controller
         return NoContent();
     }
     
-	
+	[HttpPatch("{id:int}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public IActionResult Patch(int id, Product actualizado){
+        
+        var index = Products.FindIndex(p => p.Id == id);
+
+        if (index == -1){
+            return NotFound();
+        }
+        
+        var actual = Products[index];
+
+        Products[index] = actual with
+        {
+            Name = actualizado.Name ?? actual.Name,
+            Description = actualizado.Description ?? actual.Description,
+            Price = actualizado.Price != 0 ? actualizado.Price : actual.Price,
+            Stock = actualizado.Stock != 0 ? actualizado.Stock : actual.Stock
+        };
+
+        return NoContent();
+    }
+
     public sealed record Product(
         int Id,
         string Name,
