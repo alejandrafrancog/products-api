@@ -59,8 +59,29 @@ public class ProductsController : Controller
         return NoContent();
     }
     
-	
+
+	[HttpPut("{id:int}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public IActionResult Update(int id, Product actualizado){
+
+        if(actualizado.Id != 0 && actualizado.Id != id){
+            Console.Write(actualizado.Id);
+            return BadRequest("El Id no coincide");
+        }
+        
+        var index = Products.FindIndex(p => p.Id == id);
+        
+        if(index == -1){
+            return NotFound();
+        }
+
+        Products[index] = actualizado with { Id = id };
+
+        return NoContent();
+    }
     
+	
     public sealed record Product(
         int Id,
         string Name,
