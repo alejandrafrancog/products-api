@@ -95,9 +95,15 @@ public class ProductsController : Controller
             return NotFound();
         }
         
-        Products[index] = actualizado.Name != null ? Products[index] with {Name = actualizado.Name} : Products[index];
-        Products[index] = actualizado.Description != null ? Products[index] with {Description = actualizado.Description} : Products[index];
-        Products[index] = actualizado.Price != null ? Products[index] with {Price = actualizado.Price} : Products[index];
+        var actual = Products[index];
+
+        Products[index] = actual with
+        {
+            Name = actualizado.Name ?? actual.Name,
+            Description = actualizado.Description ?? actual.Description,
+            Price = actualizado.Price != 0 ? actualizado.Price : actual.Price,
+            Stock = actualizado.Stock != 0 ? actualizado.Stock : actual.Stock
+        };
 
         return NoContent();
     }
