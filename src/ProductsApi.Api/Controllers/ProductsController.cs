@@ -84,7 +84,24 @@ public class ProductsController : Controller
         return NoContent();
     }
     
-	
+	[HttpPatch("{id:int}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public IActionResult Patch(int id, Product actualizado){
+        
+        var index = Products.FindIndex(p => p.Id == id);
+
+        if (index == -1){
+            return NotFound();
+        }
+        
+        Products[index] = actualizado.Name != null ? Products[index] with {Name = actualizado.Name} : Products[index];
+        Products[index] = actualizado.Description != null ? Products[index] with {Description = actualizado.Description} : Products[index];
+        Products[index] = actualizado.Price != null ? Products[index] with {Price = actualizado.Price} : Products[index];
+
+        return NoContent();
+    }
+
     public sealed record Product(
         int Id,
         string Name,
