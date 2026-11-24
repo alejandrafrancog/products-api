@@ -50,12 +50,15 @@ public class ProductsController : Controller
     [HttpDelete("{id:int}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<Product> Delete(int id){
+    public IActionResult Delete(int id){
 
-        if(id <= 0 || id > Products.Count){
-		   return NotFound();
-	    }	
-        Products.RemoveAt(id-1);
+        var index = Products.FindIndex(p => p.Id == id);
+
+        if(index != -1){
+            Products.RemoveAt(index);
+        }else{
+            return NotFound();
+        }
         return NoContent();
     }
     
