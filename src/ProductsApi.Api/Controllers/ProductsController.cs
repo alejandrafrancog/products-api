@@ -15,8 +15,7 @@ public class ProductsController : Controller
         new(2, "Teclado mecánico", "Teclado mecánico 123", 200.00m, 5),
         new (3, "Mouse", "Mouse inalámbrico", 25.50m, 30)];
         
-    private static int _nextId = 2;
-
+        
     [HttpGet]
     [ProducesResponseType<IEnumerable<Product>>(StatusCodes.Status200OK)]
     public ActionResult<IEnumerable<Product>> GetAll()
