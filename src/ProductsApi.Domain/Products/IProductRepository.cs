@@ -1,4 +1,4 @@
-namespace BootcampCLTNoviembre.Domain.Products;
+namespace ProductsApi.Domain.Products;
 
 /// <summary>
 /// Repositorio del LADO DE ESCRITURA: solo carga y guarda el agregado para aplicar reglas.

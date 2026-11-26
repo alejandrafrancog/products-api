@@ -1,5 +1,5 @@
 
-namespace BootcampCLTNoviembre.Domain.Products;
+namespace ProductsApi.Domain.Products;
 
 /// <summary>
 /// Agregado raiz. Modelo rico: el estado solo cambia a traves de metodos que protegen las invariantes.
