@@ -1,24 +1,24 @@
-
 services:
-  db:
+   db:
     image: postgres:17-alpine
     container_name: products-db
     restart: unless-stopped
     environment:
-      POSTGRES_DB: products_db
-      POSTGRES_USER: postgres
+      POSTGRES_DB: bootcamp_db
+      POSTGRES_USER: bootcamp_user
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d products_db"]
+      test: ["CMD-SHELL", "pg_isready -U bootcamp_user -d bootcamp_db"]
       interval: 5s
       timeout: 5s
       retries: 5
 
-  api:
+   api:
     build:
       context: .
       dockerfile: Dockerfile
