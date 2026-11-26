@@ -1,0 +1,38 @@
+services:
+   db:
+    image: postgres:17-alpine
+    container_name: products-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: bootcamp_db
+      POSTGRES_USER: bootcamp_user
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bootcamp_user -d bootcamp_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+   api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: products-api
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: 8080
+      ConnectionStrings__DefaultConnection: "Host=db;Port=5432;Database=products_db;Username=postgres;Password=${POSTGRES_PASSWORD}"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
