@@ -29,7 +29,7 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_HTTP_PORTS: 8080
-      ConnectionStrings__DefaultConnection: "Host=db;Port=5432;Database=products_db;Username=postgres;Password=${POSTGRES_PASSWORD}"
+      ConnectionStrings__BootcampDb: "Host=db;Port=5432;Database=bootcamp_db;Username=bootcamp_user;Password=${POSTGRES_PASSWORD}"
     depends_on:
       db:
         condition: service_healthy
