@@ -12,6 +12,7 @@ public record ProductResponse(
     DateTime CreatedAt,
     DateTime? UpdatedAt);
 
+public record ProductCountResponse(int Total);
 internal static class ProductMappings
 {
     public static ProductResponse ToResponse(this Product p)

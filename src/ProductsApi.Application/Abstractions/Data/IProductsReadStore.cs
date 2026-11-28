@@ -13,4 +13,5 @@ public interface IProductsReadStore
     /// <param name="search">Filtro opcional por nombre (contiene, sin distinguir mayusculas).</param>
     /// <param name="ct">Token de cancelacion.</param>
     Task<IReadOnlyList<ProductResponse>> ListAsync(string? search, CancellationToken ct = default);
+    Task<int> CountAsync(CancellationToken ct);
 }

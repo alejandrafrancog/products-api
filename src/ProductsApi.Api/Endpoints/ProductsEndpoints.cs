@@ -35,6 +35,11 @@ public static class ProductsEndpoints
             .WithSummary("Obtiene un producto por id.")
             .ProducesProblem(StatusCodes.Status404NotFound);
 
+        group.MapGet("/count", async(ISender sender, CancellationToken ct) => 
+            TypedResults.Ok(await sender.Send(new CountAllProductsQuery(), ct)))
+            .WithName("CountProducts")
+            .WithSummary("Cuenta la cantidad total de productos");
+
         // ---------- Commands ----------
         group.MapPost("/", async (CreateProductCommand command, ISender sender, CancellationToken ct) =>
             {

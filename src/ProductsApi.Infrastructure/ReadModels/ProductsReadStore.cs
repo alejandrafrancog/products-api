@@ -33,4 +33,6 @@ internal sealed class ProductsReadStore(AppDbContext db) : IProductsReadStore
             .Select(p => new ProductResponse(p.Id, p.Name, p.Description, p.Price, p.Stock, p.CreatedAt, p.UpdatedAt))
             .ToListAsync(ct);
     }
+
+    public async Task<int> CountAsync(CancellationToken ct) => await db.Products.CountAsync(ct);
 }
